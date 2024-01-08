@@ -1,0 +1,4 @@
+dist/app.js
+dist/public/script
+node_modules
+.idea
