@@ -2,8 +2,15 @@
     box-sizing: border-box;
     margin: 0;
 }
+html {
+    height: 100%;
+}
 
 body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #deffba;
     font-family: sans-serif;
     font-size: 1.5rem;
@@ -15,35 +22,49 @@ body {
 #introduction-box {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    border-radius: 0.8rem;
     background-color: #aafc9a;
-    border-radius: 0.5rem;
     box-shadow: 0 0 0.5rem rgba(66, 133, 33, 0.66);
-    margin: 1rem auto;
+    margin: 1rem;
     max-width: 50rem;
-    padding: 1rem;
+    max-height: 35rem;
+    padding: 0.5rem;
     text-align: center;
 }
 
 #name-input {
     background-color: rgba(127, 204, 107, 0.56);
+    min-width: 7rem;
+    width: 80%;
 }
 #name-input:focus {
     outline: none;
     background-color: rgba(166, 218, 152, 0.56);
 }
 
-#play-button {
-    background-color: #7fcc6b;
-    box-shadow: 0 0 0.5rem rgba(66, 133, 33, 0.66);
-    cursor: pointer;
-    width: 10rem;
+#game-id-label {
+    margin: 0.75rem;
+    font-size: 2.35rem;
+}
+
+.introduction-box-container {
+    font-size: 2rem;
+    margin: 0.5rem ;
 }
 
 .box-element {
     text-align: center;
     font-size: 1.3rem;
-    margin: 0.5rem auto;
+    margin: 0.3rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
     border-width: 0;
+}
+
+.introduction-box-button {
+    background-color: #7fcc6b;
+    box-shadow: 0 0 0.5rem rgba(66, 133, 33, 0.66);
+    cursor: pointer;
+    min-width: 5rem;
 }
