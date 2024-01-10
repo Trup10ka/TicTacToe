@@ -1,11 +1,11 @@
 import express from 'express'
 import http from 'http'
-import socketIO, {Socket} from 'socket.io'
+import socketIO, {Server} from 'socket.io'
 
 const port = process.env.PORT || 8000
 const app = express()
 const server = http.createServer(app)
-const io = new socketIO.Server()
+const io = new Server()
 
 const playerDuos : Array<string[]> = []
 
