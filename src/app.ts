@@ -20,9 +20,20 @@ app.get('/', (req, res) => {
     }
 )
 
-io.on('playerConnection', (message, socket) => {
-        console.log(message)
-        console.log(socket)
+io.on('connection', (socket) => {
+        console.log('a user connected')
+        socket.on('disconnect', () => {
+                console.log('user disconnected')
+            }
+        )
+        socket.on('tryRandomJoin', () => {
+                console.log('tryRandomJoin has been called')
+            }
+        )
+        socket.on('playerConnection', (message) => {
+                console.log(message)
+            }
+        )
     }
 )
 

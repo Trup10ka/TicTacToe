@@ -1,7 +1,8 @@
 // @ts-ignore
-const io = io('http://localhost:8000')
+const ws = io('http://localhost:8000')
 
-function enterInQueue()
+function joinRandomGame()
 {
-    io.emit('playerConnection', 'Player connected to the server' + '');
+    ws.emit('tryRandomJoin');
+    console.log('called random join')
 }
