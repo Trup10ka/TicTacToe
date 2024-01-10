@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>TTT - Lobby</title>
+        <link rel="stylesheet" href="/style/style.css">
+        <link rel="icon" href="/assets/icon.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Lobby">
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div id="introduction-box">
+            <label>Enter Game ID</label>
+            <div id="game-id-container" class="introduction-box-container">
+                <label for="game-id-input"></label><input class="box-element" id="game-id-input" type="text" maxlength="30" placeholder="ID">
+                <button id="enter-game-id-button" class="box-element" onclick="tryToConnect()">Join</button>
+            </div>
+            <label>OR</label>
+            <div class="introduction-box-container">
+                <button id="create-game-button" class="box-element" onclick="createNewGame()">Create new Game</button>
+                <button id="join-random-game-button" class="box-element" onclick="joinRandomGame()">Join random Game</button>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
+        <script src="/script/index.js"></script>
+    </body>
+</html>

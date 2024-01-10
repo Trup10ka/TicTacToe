@@ -16,7 +16,7 @@ app.set('view engine', 'ejs')
 app.use(express.static('dist/public'))
 
 app.get('/', (req, res) => {
-        res.render('login')
+        res.render('lobby')
     }
 )
 
