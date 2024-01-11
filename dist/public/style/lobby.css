@@ -54,6 +54,18 @@ body {
     font-size: 2.35rem;
 }
 
+#tic {
+    color: rgba(1, 96, 1, 0.75);
+}
+
+#tac {
+    color: rgba(2, 150, 2, 0.75);
+}
+
+#toe {
+    color: rgba(4, 199, 4, 0.75);
+}
+
 .introduction-box-container {
     font-size: 2rem;
     margin: 0.5rem ;
