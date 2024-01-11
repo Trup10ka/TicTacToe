@@ -1,14 +1,15 @@
 import express from 'express'
 import http from 'http'
-import socketIO, {Server} from 'socket.io'
-import { listeners } from "./util/listeners";
+import { Server, Socket } from 'socket.io'
+import { Game } from "./tictactoe/data/game"
+import { utils } from "./util/util";
 
 const port = process.env.PORT || 8000
 const app = express()
 const server = http.createServer(app)
 const io = new Server()
 
-const playerDuos : Array<string[]> = []
+const activeGames: Array<Game> = []
 
 io.attach(server)
 
@@ -28,13 +29,11 @@ app.get('/create', (req, res) => {
 
 io.on('connection', (socket) => {
 
-        console.log('User ' + socket.client + ' connected')
+        socket.on('createGame', createGame)
 
-        socket.on('disconnect', listeners.onDisconnect)
+        socket.on('tryRandomJoin', randomJoin)
 
-        socket.on('tryRandomJoin', listeners.randomJoin)
-
-        socket.on('playerConnection', listeners.playerConnection)
+        socket.on('playerConnection', playerConnection)
     }
 )
 
@@ -42,3 +41,23 @@ server.listen(port, () => {
         console.log("Server is running on port: " + port)
     }
 )
+
+function createGame(socket: Socket)
+{
+    const gameId = utils.generateGameId()
+    const game = new Game('test', io)
+
+    game.addPlayer(socket)
+
+    activeGames[gameId] = game
+}
+
+function randomJoin()
+{
+    console.log('randomJoin has been called')
+}
+
+function playerConnection(message: string)
+{
+    console.log(message)
+}
