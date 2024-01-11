@@ -20,6 +20,11 @@ app.get('/', (req, res) => {
     }
 )
 
+app.get('/create', (req, res) => {
+        res.render('gamecreate')
+    }
+)
+
 io.on('connection', (socket) => {
         console.log('a user connected')
         socket.on('disconnect', () => {
