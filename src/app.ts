@@ -1,6 +1,7 @@
 import express from 'express'
 import http from 'http'
 import socketIO, {Server} from 'socket.io'
+import { listeners } from "./util/listeners";
 
 const port = process.env.PORT || 8000
 const app = express()
@@ -26,19 +27,14 @@ app.get('/create', (req, res) => {
 )
 
 io.on('connection', (socket) => {
-        console.log('a user connected')
-        socket.on('disconnect', () => {
-                console.log('user disconnected')
-            }
-        )
-        socket.on('tryRandomJoin', () => {
-                console.log('tryRandomJoin has been called')
-            }
-        )
-        socket.on('playerConnection', (message) => {
-                console.log(message)
-            }
-        )
+
+        console.log('User ' + socket.client + ' connected')
+
+        socket.on('disconnect', listeners.onDisconnect)
+
+        socket.on('tryRandomJoin', listeners.randomJoin)
+
+        socket.on('playerConnection', listeners.playerConnection)
     }
 )
 
