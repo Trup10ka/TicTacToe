@@ -41,19 +41,18 @@ function configureWebsocketServer(ioSocket: Server)
 }
 function configureApp(appInstance: express.Express)
 {
-    appInstance.set('view engine', 'ejs')
     appInstance.use(express.static('dist/public'))
 }
 
 function configureRouting(appInstance: express.Express)
 {
     appInstance.get('/', (req, res) => {
-            res.render('lobby')
+            res.sendFile('views/lobby.html', { root: '.' })
         }
     )
 
     appInstance.get('/create', (req, res) => {
-            res.render('gamecreate')
+            res.sendFile('views/gamecreate.html', { root: '.' })
         }
     )
 }
