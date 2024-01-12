@@ -11,37 +11,52 @@ const io = new Server()
 
 const activeGames: Array<Game> = []
 
-io.attach(server)
+configureApp(app)
+configureRouting(app)
+configureWebsocketServer(io)
+startServer(server)
 
-app.set('view engine', 'ejs')
+function startServer(server: http.Server)
+{
+    server.listen(port, () => {
+            console.log("Server is running on port: " + port)
+        }
+    )
+}
 
-app.use(express.static('dist/public'))
+function configureWebsocketServer(ioSocket: Server)
+{
+    ioSocket.attach(server)
 
-app.get('/', (req, res) => {
-        res.render('lobby')
-    }
-)
+    ioSocket.on('connection', (socket) => {
 
-app.get('/create', (req, res) => {
-        res.render('gamecreate')
-    }
-)
+            socket.on('createGame', () => createGame(socket))
 
-io.on('connection', (socket) => {
+            socket.on('tryRandomJoin', randomJoin)
 
-        socket.on('createGame', createGame)
+            socket.on('playerConnection', playerConnection)
+        }
+    )
 
-        socket.on('tryRandomJoin', randomJoin)
+}
+function configureApp(appInstance: express.Express)
+{
+    appInstance.set('view engine', 'ejs')
+    appInstance.use(express.static('dist/public'))
+}
 
-        socket.on('playerConnection', playerConnection)
-    }
-)
+function configureRouting(appInstance: express.Express)
+{
+    appInstance.get('/', (req, res) => {
+            res.render('lobby')
+        }
+    )
 
-server.listen(port, () => {
-        console.log("Server is running on port: " + port)
-    }
-)
-
+    appInstance.get('/create', (req, res) => {
+            res.render('gamecreate')
+        }
+    )
+}
 function createGame(socket: Socket)
 {
     const gameId = utils.generateGameId()
