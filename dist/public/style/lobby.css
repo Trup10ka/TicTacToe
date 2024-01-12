@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Nunito';
+    src: url('../fonts/Nunito-Regular.ttf');
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -13,11 +18,16 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #deffba;
-    font-family: sans-serif;
     font-size: 1.5rem;
+    font-family: 'Nunito';
     line-height: 1.5;
     margin: 0;
     padding: 0;
+}
+
+input, textarea, button {
+    font-family: inherit;
+    font-size: 1.5rem;
 }
 
 #header {
