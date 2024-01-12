@@ -43,24 +43,3 @@
 #toe {
     color: rgba(4, 199, 4, 0.75);
 }
-
-.introduction-box-container {
-    font-size: 2rem;
-    margin: 0.5rem ;
-}
-
-.box-element {
-    text-align: center;
-    font-size: 1.3rem;
-    margin: 0.3rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    border-width: 0;
-}
-
-.introduction-box-button {
-    background-color: #7fcc6b;
-    box-shadow: 0 0 0.5rem rgba(66, 133, 33, 0.66);
-    cursor: pointer;
-    min-width: 5rem;
-}
