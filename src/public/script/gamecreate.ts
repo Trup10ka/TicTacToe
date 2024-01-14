@@ -7,7 +7,7 @@ function showGameModes()
     gameModeChoice.classList.toggle("show");
 }
 
-function gamecreate()
+function gameCreate()
 {
     ws.emit('gamecreate')
 }
