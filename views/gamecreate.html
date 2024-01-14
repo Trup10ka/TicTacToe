@@ -20,10 +20,45 @@
         </header>
         <main>
             <div id="create-game-box">
-
+                <div class="field-container">
+                    <input class="box-element" id="game-name-input" type="text" maxlength="40" placeholder="Game name...">
+                    <label for="game-name-input" class="optional-label">*optional</label>
+                </div>
+                <div class="field-container">
+                    <input class="box-element" id="game-password-input" type="password" maxlength="40" placeholder="Password...">
+                    <label class="optional-label" for="game-password-input">*optional</label>
+                </div>
+                <div class="radio-container">
+                    <label id="game-size-label">Game size</label>
+                    <form id="game-size-form">
+                        <label class="radio-choice-label">
+                            <input type="radio" class="option-input radio" name="size" checked />
+                            3x3
+                        </label>
+                        <label class="radio-choice-label">
+                            <input type="radio" class="option-input radio" name="size" />
+                            9x9
+                        </label>
+                        <label class="radio-choice-label">
+                            <input type="radio" class="option-input radio" name="size" />
+                            18x18
+                        </label>
+                    </form>
+                </div>
+                <div class="dropdown-menu-container">
+                    <button type="button" onclick="showGameModes()" class="dropdown-button">Choose a game mode</button>
+                    <div id="dropdown-content-container" class="dropdown-content-container">
+                        <a>Classic</a>
+                        <a>War</a>
+                        <!-- Implement a hint about each Game mode -->
+                    </div>
+                </div>
+                <div class="field-container">
+                    <button id="create-game-button" type="button" onclick="gamecreate()" class="dropdown-button">Create Game</button>
+                </div>
             </div>
         </main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"></script>
-        <script src="/script/creategame.js"></script>
+        <script src="/script/gamecreate.js"></script>
     </body>
 </html>
