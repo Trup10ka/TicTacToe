@@ -30,6 +30,16 @@ input, textarea, button {
     font-size: 1.5rem;
 }
 
+input[type="text"], input[type="password"] {
+    background-color: rgba(127, 204, 107, 0.56);
+    min-width: 7rem;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: green groove 0.2rem;
+    background-color: rgba(166, 218, 152, 0.56);
+}
+
 
 .introduction-box-container {
     font-size: 2rem;
