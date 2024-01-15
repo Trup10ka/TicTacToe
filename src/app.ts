@@ -44,15 +44,19 @@ function configureApp(appInstance: express.Express)
     appInstance.use(express.static('dist/public'))
 }
 
-function configureRouting(appInstance: express.Express)
-{
+function configureRouting(appInstance: express.Express) {
     appInstance.get('/', (req, res) => {
-            res.sendFile('views/lobby.html', { root: '.' })
+            res.sendFile('views/lobby.html', {root: '.'})
         }
     )
 
     appInstance.get('/create', (req, res) => {
-            res.sendFile('views/gamecreate.html', { root: '.' })
+            res.sendFile('views/gamecreate.html', {root: '.'})
+        }
+    )
+
+    appInstance.get('/game3x3', (req, res) => {
+            res.sendFile('views/game3x3.html', {root: '.'})
         }
     )
 }
@@ -61,9 +65,13 @@ function createGame(socket: Socket)
     const gameId = utils.generateGameId()
     const game = new Game('test', io)
 
+    socket.join(gameId.toString())
+
     game.addPlayer(socket)
 
     activeGames[gameId] = game
+
+    io.to(gameId.toString()).emit('GameCreated', gameId)
 }
 
 function randomJoin()
