@@ -1,3 +1,15 @@
+#header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 250px;
+    padding: 15px;
+    background-color: #7fcc6b;
+    box-shadow: 0 0 0.5rem rgba(66, 133, 33, 0.66);
+    border-radius: 0.8rem;
+}
+
 #playground-grid, #currently-playing-player {
     font-size: 2rem;
 }
@@ -26,6 +38,11 @@
     background-color: #7fcc6b;
     box-shadow: 0 0 0.5rem rgba(66, 133, 33, 0.66);
     border-radius: 0.8rem;
+}
+
+.header-text {
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .game-tile {
