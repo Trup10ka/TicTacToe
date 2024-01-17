@@ -1,4 +1,3 @@
-// @ts-ignore
 const gameModeChoice = document.getElementById("dropdown-content-container")! as HTMLButtonElement;
 
 function showGameModes()
@@ -8,5 +7,4 @@ function showGameModes()
 
 function gameCreate()
 {
-    ws.emit('gamecreate')
 }

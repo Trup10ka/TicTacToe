@@ -1,6 +1,3 @@
-// @ts-ignore
-const ws = io('http://localhost:8000')
-
 configureSocket()
 function joinRandomGame()
 {
@@ -21,9 +18,5 @@ function tryToConnect()
 
 function configureSocket()
 {
-    ws.on("GameCreated", (gameId: string) => {
-            console.log(`Game created with id ${gameId}`)
-        }
-    )
 }
 
