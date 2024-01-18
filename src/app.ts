@@ -1,15 +1,15 @@
 import express from 'express'
 import http from 'http'
 import { Server, Socket } from 'socket.io'
-import { Game } from "./tictactoe/data/game"
-import { utils } from "./util/util";
+import { Session } from "./tictactoe/data/session"
+import { generateGameId } from "./util/util";
 
 const port = process.env.PORT || 8000
 const app = express()
 const server = http.createServer(app)
 const io = new Server()
 
-const activeGames: Array<Game> = []
+const activeGames: Map<string, Session> = new Map()
 
 configureApp(app)
 configureRouting(app)
@@ -30,7 +30,7 @@ function configureWebsocketServer(ioSocket: Server)
 
     ioSocket.on('connection', (socket) => {
 
-            socket.on('createGame', () => createGame(socket))
+            socket.on('createGame', () => createSession(socket))
 
             socket.on('tryRandomJoin', randomJoin)
 
@@ -55,21 +55,21 @@ function configureRouting(appInstance: express.Express) {
         }
     )
 
-    appInstance.get('/game3x3', (req, res) => {
+    appInstance.get('/game', (req, res) => {
             res.sendFile('views/game3x3.html', {root: '.'})
         }
     )
 }
-function createGame(socket: Socket)
+function createSession(socket: Socket)
 {
-    const gameId = utils.generateGameId()
-    const game = new Game('test', io)
+    const gameId = generateGameId()
+    const session = new Session(gameId, io)
 
     socket.join(gameId.toString())
 
-    game.addPlayer(socket)
+    session.addPlayer(socket)
 
-    activeGames[gameId] = game
+    activeGames.set(gameId, session)
 
     io.to(gameId.toString()).emit('GameCreated', gameId)
 }

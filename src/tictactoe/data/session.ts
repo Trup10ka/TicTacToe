@@ -1,6 +1,6 @@
 import {Server, Socket} from "socket.io";
 
-export class Game
+export class Session
 {
     private players: Socket[] = []
 
