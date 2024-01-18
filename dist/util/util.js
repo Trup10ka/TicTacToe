@@ -23,9 +23,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.utils = exports.generateGameId = void 0;
+exports.utils = exports.getRandomNumber = exports.getRandomLetter = exports.generateGameId = void 0;
 function generateGameId() {
-    return Math.random().toString(36).length;
+    let id = "";
+    for (let i = 0; i < 5; i++) {
+        id += getRandomNumber();
+        if (i == 2)
+            id += "-";
+        id += getRandomLetter();
+    }
+    return id;
 }
 exports.generateGameId = generateGameId;
+function getRandomLetter() {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    return alphabet[Math.floor(Math.random() * alphabet.length)];
+}
+exports.getRandomLetter = getRandomLetter;
+function getRandomNumber() {
+    return Math.floor(Math.random() * 10);
+}
+exports.getRandomNumber = getRandomNumber;
 exports.utils = __importStar(require("./util"));
