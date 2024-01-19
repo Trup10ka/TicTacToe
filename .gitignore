@@ -1,4 +1,6 @@
 dist/app.js
 dist/public/script
+dist/tictactoe
+dist/util
 node_modules
 .idea
