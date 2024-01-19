@@ -1,10 +1,11 @@
-import {Server, Socket} from "socket.io";
+import { Server, Socket } from "socket.io";
+import { GameMode } from "../gamemode/gamemode";
 
 export class Session
 {
     private players: Socket[] = []
 
-    constructor(private id: string, private io: Server)
+    constructor(public id: string, private io: Server, public gameMode: GameMode)
     {
     }
 
@@ -12,4 +13,5 @@ export class Session
     {
         this.players.push(player)
     }
+
 }
