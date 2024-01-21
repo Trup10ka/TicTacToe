@@ -54,16 +54,15 @@ function configureRouting(appInstance: express.Express) {
             res.sendFile('views/gamecreate.html', { root: '.' })
         }
     )
-
     appInstance.get('/game', (req, res) => {
-            res.sendFile('views/game3x3.html', { root: '.' })
+            const gameId = req.query.id!.toString()
+            res.sendFile('views/game.html', { root: '.' })
         }
     )
 
     appInstance.post('/create-session', (req, res) => {
-            const gameData = new GameData(new ClassicGameMode(), req.body.gameName, req.body.password)
-            createSession(gameData)
-            res.sendFile('views/game3x3.html', { root: '.' })
+            res.sendFile('views/game.html', { root: '.' })
+            res.append('gameId', 'test')
         }
     )
 }
