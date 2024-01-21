@@ -70,11 +70,15 @@ function configureRouting(appInstance: express.Express) {
 function createSession(gameData: GameData)
 {
     const gameId = generateGameId()
-    const session = new Session(gameId, io, new ClassicGameMode())
-
+    const session = new Session(
+        io,
+        gameId,
+        gameData.gameName ?? 'Unnamed',
+        gameData.password ?? '',
+        gameData.gameMode,
+        new Array(gameData.playground).fill(new Array(3).fill(0))
+    )
     activeGames.set(gameId, session)
-
-    io.to(gameId.toString()).emit('GameCreated', gameId)
 }
 
 function randomJoin()

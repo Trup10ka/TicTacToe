@@ -5,13 +5,23 @@ export class Session
 {
     private players: Socket[] = []
 
-    constructor(public id: string, private io: Server, public gameMode: GameMode)
+    constructor(
+        private io: Server,
+        public id: string,
+        public name: string,
+        private password: string,
+        public gameMode: GameMode,
+        public playground: number[][]
+    )
     {
     }
 
     public addPlayer(player: Socket)
     {
-        this.players.push(player)
+        if (this.players.length >= 2)
+            this.players.push(player)
+        else
+            player.emit("room-is-full")
     }
 
 }

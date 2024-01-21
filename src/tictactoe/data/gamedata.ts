@@ -6,6 +6,7 @@ export class GameData
        public readonly gameMode: GameMode,
        public readonly gameName?: string,
        public readonly password?: string,
+       public readonly playground?: number
    )
    {
    }
