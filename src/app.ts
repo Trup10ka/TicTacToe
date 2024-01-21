@@ -32,19 +32,33 @@ function configureWebsocketServer(ioSocket: Server)
 
     ioSocket.on('connection', (socket) => {
 
-            socket.on('tryRandomJoin', randomJoin)
-
-            socket.on('playerConnection', playerConnection)
+            socket.on('find-room', (gameId) => {
+                    if (activeGames.has(gameId))
+                        socket.emit('room-found')
+                }
+            )
+            socket.on('join-room', (gameId) => {
+                    const session = activeGames.get(gameId)!
+                    session.addPlayer(socket)
+                    socket.join(gameId)
+                }
+            )
+            socket.on("get-game-data", (gameId) => {
+                    const session = activeGames.get(gameId)!
+                    socket.emit("game-data",  { gameMode: session.gameMode, playground: session.playground } as any)
+                }
+            )
         }
     )
-
 }
 function configureApp(appInstance: express.Express)
 {
     appInstance.use(express.static('dist/public'))
+    appInstance.use(express.json())
 }
 
-function configureRouting(appInstance: express.Express) {
+function configureRouting(appInstance: express.Express)
+{
     appInstance.get('/', (req, res) => {
             res.sendFile('views/lobby.html', { root: '.' })
         }
@@ -60,24 +74,36 @@ function configureRouting(appInstance: express.Express) {
         }
     )
 
+    appInstance.get('/get-game-data', (req, res) => {
+            const gameId = req.query.id!.toString()
+            const session = activeGames.get(gameId)!
+            res.append('gridSize', session.playground.length.toString())
+            res.json({ playground: session.playground } )
+        }
+    )
+
     appInstance.post('/create-session', (req, res) => {
+            const gameData = GameData.fromJSON(req.body) // TODO: Validate data, make it typed
+            const session = createSession(gameData)
             res.sendFile('views/game.html', { root: '.' })
-            res.append('gameId', 'test')
+            res.append('gameId', session.id)
         }
     )
 }
-function createSession(gameData: GameData)
+function createSession(gameData: GameData) : Session
 {
     const gameId = generateGameId()
     const session = new Session(
         io,
         gameId,
-        gameData.gameName ?? 'Unnamed',
-        gameData.password ?? '',
+        gameData.gameName,
+        gameData.password,
         gameData.gameMode,
-        new Array(gameData.playground).fill(new Array(3).fill(0))
+        new Array(gameData.playground).fill(new Array(gameData.playground).fill(0))
     )
     activeGames.set(gameId, session)
+
+    return session
 }
 
 function randomJoin()
