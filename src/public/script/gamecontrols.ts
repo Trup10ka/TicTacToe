@@ -2,7 +2,8 @@ const playgroundGrid = document.getElementById("playground-grid") as HTMLDivElem
 
 preparePlayground()
 
-function preparePlayground() {
+function preparePlayground()
+{
     const gridSize = getSizeOfGridFromDocumentName();
 
     for (let i = 0; i < gridSize * gridSize; i++)
