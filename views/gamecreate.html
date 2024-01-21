@@ -46,10 +46,10 @@
                     </form>
                 </div>
                 <div class="dropdown-menu-container">
-                    <button type="button" onclick="showGameModes()" class="dropdown-button">Choose a game mode</button>
+                    <button id="dropdown-content-button" type="button" onclick="showGameModes()" class="dropdown-button">Choose a game mode</button>
                     <div id="dropdown-content-container" class="dropdown-content-container">
-                        <a>Classic</a>
-                        <a>War</a>
+                        <a onclick="chooseGameMode('Classic')">Classic</a>
+                        <a onclick="chooseGameMode('War')">War</a>
                         <!-- Implement a hint about each Game mode -->
                     </div>
                 </div>

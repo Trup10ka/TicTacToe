@@ -68,6 +68,7 @@
 .dropdown-menu-container {
     display: inline-block;
     position: relative;
+    min-width: 100%;
 }
 
 .dropdown-button {
@@ -79,6 +80,7 @@
     cursor: pointer;
     transition: 0.20s ease;
     border-radius: 0.5rem;
+    min-width: 80%;
 }
 
 .dropdown-button:hover, .dropdown-button:focus {
@@ -91,7 +93,7 @@
     position: absolute;
     background-color: rgba(72, 201, 22, 0.84);
     border-radius: 0.5rem;
-    min-width: 160px;
+    min-width: 260px;
     box-shadow: 0 8px 16px 0 rgba(72, 201, 22, 0.84);
     z-index: 1;
 }
