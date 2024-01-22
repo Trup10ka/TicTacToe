@@ -5,6 +5,7 @@ import { Session } from "./tictactoe/data/session"
 import { generateGameId } from "./util/util";
 import { ClassicGameMode } from "./tictactoe/gamemode/classicgamemode";
 import { GameData } from "./tictactoe/data/gamedata";
+import { PlaceTileState } from "./tictactoe/data/placetilestate";
 
 const port = process.env.PORT || 8000
 const app = express()
@@ -34,7 +35,7 @@ function configureWebsocketServer(ioSocket: Server)
 
             socket.on('find-room', (gameId) => {
                     if (activeGames.has(gameId.gameId))
-                        io.to(socket.id).emit('room-found')
+                        ioSocket.to(socket.id).emit('room-found')
                 }
             )
             socket.on('join-room', (gameId) => {
@@ -45,7 +46,16 @@ function configureWebsocketServer(ioSocket: Server)
             )
             socket.on('get-game-data', (gameId) => {
                     const session = activeGames.get(gameId.gameId)!
-                    io.to(socket.id).emit('game-data', session.playground)
+                    ioSocket.to(socket.id).emit('game-data', session.playground)
+                }
+            )
+            socket.on('place-symbol', (gameId, x, y) => {
+                    const session = activeGames.get(gameId.gameId)!
+                    const canPlaceTile = session.place(x, y, socket)
+                    if (canPlaceTile == 1)
+                        ioSocket.to(socket.id).emit('symbol-placed')
+                    else
+                        ioSocket.to(socket.id).emit('symbol-not-placed', PlaceTileState[canPlaceTile])
                 }
             )
         }
@@ -73,14 +83,6 @@ function configureRouting(appInstance: express.Express)
             res.sendFile('views/game.html', { root: '.' })
         }
     )
-
-    /*appInstance.get('/get-game-data', (req, res) => {
-            const gameId = req.query.id!.toString()
-            const session = activeGames.get(gameId)!
-            res.append('gridSize', session.playground.length.toString())
-            res.json({ playground: session.playground } )
-        }
-    )*/
 
     appInstance.post('/create-session', (req, res) => {
             const gameData = GameData.fromJSON(req.body) // TODO: Validate data, make it typed
