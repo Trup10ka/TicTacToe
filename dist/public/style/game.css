@@ -31,36 +31,36 @@
     font-weight: bold;
 }
 
+.game-tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(105, 189, 83, 0.75);
+    border-radius: 0.8rem;
+}
 
+.game-tile:hover {
+    background-color: rgba(84, 152, 66, 0.75);
+}
 
-.game-tile-3 {
+.game-tile:active {
+    background-color: rgba(66, 133, 33, 0.75);
+    transform: translate(0, -0.1rem);
+}
+
+.tile-size-3 {
     min-height: 60px;
     min-width: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(105, 189, 83, 0.75);
-    border-radius: 0.8rem;
 }
 
-.game-tile-5 {
+.tile-size-5 {
     min-height: 50px;
     min-width: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(105, 189, 83, 0.75);
-    border-radius: 0.8rem;
 }
 
-.game-tile-9 {
+.tile-size-9 {
     min-height: 45px;
     min-width: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(105, 189, 83, 0.75);
-    border-radius: 0.8rem;
 }
 
 .game-grid {
