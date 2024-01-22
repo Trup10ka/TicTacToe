@@ -33,19 +33,19 @@ function configureWebsocketServer(ioSocket: Server)
     ioSocket.on('connection', (socket) => {
 
             socket.on('find-room', (gameId) => {
-                    if (activeGames.has(gameId))
-                        socket.emit('room-found')
+                    if (activeGames.has(gameId.gameId))
+                        io.to(socket.id).emit('room-found')
                 }
             )
             socket.on('join-room', (gameId) => {
-                    const session = activeGames.get(gameId)!
+                    const session = activeGames.get(gameId.gameId)!
                     session.addPlayer(socket)
                     socket.join(gameId)
                 }
             )
-            socket.on("get-game-data", (gameId) => {
-                    const session = activeGames.get(gameId)!
-                    socket.emit("game-data",  { gameMode: session.gameMode, playground: session.playground } as any)
+            socket.on('get-game-data', (gameId) => {
+                    const session = activeGames.get(gameId.gameId)!
+                    io.to(socket.id).emit('game-data', session.playground)
                 }
             )
         }
@@ -74,13 +74,13 @@ function configureRouting(appInstance: express.Express)
         }
     )
 
-    appInstance.get('/get-game-data', (req, res) => {
+    /*appInstance.get('/get-game-data', (req, res) => {
             const gameId = req.query.id!.toString()
             const session = activeGames.get(gameId)!
             res.append('gridSize', session.playground.length.toString())
             res.json({ playground: session.playground } )
         }
-    )
+    )*/
 
     appInstance.post('/create-session', (req, res) => {
             const gameData = GameData.fromJSON(req.body) // TODO: Validate data, make it typed
