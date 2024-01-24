@@ -1,12 +1,15 @@
 import { Server, Socket } from "socket.io";
 import { GameMode } from "../gamemode/gamemode";
-import {PlaceTileState} from "./placetilestate";
+import { PlaceTileEvent } from "./placetilestate";
+import { Player } from "./player";
+import { Symbol } from "./symbol";
+import { SessionState } from "./sessionstate";
 
 export class Session
 {
-    private players: Socket[] = []
+    private players: Player[] = []
 
-    public currentPlayer?: Socket
+    public currentPlayer?: Player
 
     constructor(
         private io: Server,
@@ -15,30 +18,46 @@ export class Session
         private password: string,
         public gameMode: GameMode,
         public playground: number[][],
+        public sessionState: SessionState
     )
     {
     }
 
-    public place(x: number, y: number, player: Socket) : number
+    public place(x: number, y: number, socket: Socket) : number
     {
-        if (this.playground[y][x] != 0)
-            return PlaceTileState.ALREADY_PLACED
-        else if (this.currentPlayer != player)
-            return PlaceTileState.NOT_YOUR_TURN
+        if (this.sessionState == SessionState.NOT_STARTED) return SessionState.NOT_STARTED
+        if (this.playground[x][y] != 0) return PlaceTileEvent.ALREADY_PLACED_TILE
+        else if (this.currentPlayer!.playerSocket.id != socket.id) return PlaceTileEvent.NOT_YOUR_TURN
 
-        this.playground[y][x] = 1
-        return PlaceTileState.SUCCESS
+        this.playground[x][y] = this.currentPlayer!.symbol!
+        this.currentPlayer = this.players.find(player => player.playerSocket.id != socket.id)
+        return PlaceTileEvent.SUCCESS
     }
 
-    public addPlayer(player: Socket)
+    public addPlayer(player: Player)
     {
-        if (this.players.length == 0)
-            this.currentPlayer = player
-
         if (this.players.length >= 2)
-            this.players.push(player)
+        {
+            player.playerSocket.emit("room-is-full")
+            return
+        }
+        if (this.players.length == 0)
+        {
+            player.symbol = Symbol.X
+            this.currentPlayer = player
+        }
         else
-            player.emit("room-is-full")
+        {
+            player.symbol = Symbol.O
+            this.sessionState = SessionState.IN_PROGRESS
+        }
+        this.players.push(player)
     }
 
+    private placeTile(x: number, y: number, socket: Socket)
+    {
+        this.playground[x][y] = this.currentPlayer!.symbol!
+        this.currentPlayer = this.players.find(player => player.playerSocket.id != socket.id)
+        return
+    }
 }

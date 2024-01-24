@@ -1,6 +1,7 @@
-export enum PlaceTileState
+export enum PlaceTileEvent
 {
     SUCCESS,
-    ALREADY_PLACED,
-    NOT_YOUR_TURN
+    ALREADY_PLACED_TILE,
+    NOT_YOUR_TURN,
+    INVALID_SOCKET
 }
