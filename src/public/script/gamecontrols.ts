@@ -3,6 +3,7 @@ const playgroundGrid = document.getElementById("playground-grid") as HTMLDivElem
 const gameId = url.searchParams.get("id")!
 // @ts-ignore
 let ws: io.Socket
+let playgroundDivArray: HTMLDivElement[][]
 
 establishWebSocketConnection()
 preparePlayground()
@@ -13,33 +14,38 @@ function establishWebSocketConnection()
 
     configureWebsocket(ws)
 
-    ws.emit("find-room", { gameId: gameId } )
+    ws.emit("find-room", gameId)
 }
 
 function preparePlayground()
 {
-    ws.emit("get-game-data", { gameId: gameId })
-    ws.emit("playground-prepared", { gameId: gameId })
+    ws.emit("get-game-data", gameId)
+    ws.emit("playground-prepared", gameId)
 }
 
 function loadGrid(playground: number[][])
 {
     playgroundGrid.classList.add("size-" + playground.length.toString())
-    for (let y = 0; y < playground.length; y++)
+    playgroundDivArray = new Array(playground.length)
+    for (let x = 0; x < playground.length; x++)
     {
-        for (let i = 0; i < playground[y].length; i++)
+        playgroundDivArray[x] = new Array(playground[x].length)
+        for (let i = 0; i < playground[x].length; i++)
         {
-            const gameTileDiv = createTile(playground, y, i)
+            const gameTileDiv = createTile(playground, x, i)
+            playgroundDivArray[x][i] = gameTileDiv
             playgroundGrid.appendChild(gameTileDiv)
         }
     }
 }
 
-function createTile(playground: number[][], y: number, i: number) : HTMLDivElement
+function createTile(playground: number[][], x: number, i: number) : HTMLDivElement
 {
     const gameTileDiv = document.createElement("div")
-    gameTileDiv.classList.add("game-tile-" + playground.length)
-    insertSymbol(gameTileDiv, playground[y][i])
+    gameTileDiv.classList.add("tile-size-" + playground.length)
+    gameTileDiv.classList.add("game-tile")
+    gameTileDiv.onclick = () => placeSymbol(x, i)
+    insertSymbol(gameTileDiv, playground[x][i])
     return gameTileDiv
 }
 
@@ -49,7 +55,7 @@ function insertSymbol(tile: HTMLDivElement, symbol: number)
         return
     else if (symbol == 1)
         tile.innerText = "X"
-    else if (symbol == 2)
+    else if (symbol == -1)
         tile.innerText = "O"
 }
 
