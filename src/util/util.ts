@@ -37,4 +37,12 @@ export function getRandomNumber(): number
 {
     return Math.floor(Math.random() * 10)
 }
+
+export function processPlaceTileRequest(code: number) : string
+{
+    if (code <= 3)
+        return PlaceTileEvent[code].toString()
+    else
+        return SessionState[code].toString()
+}
 export * as utils from "./util"

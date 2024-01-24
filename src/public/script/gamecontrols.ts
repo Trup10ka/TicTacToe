@@ -7,6 +7,13 @@ let playgroundDivArray: HTMLDivElement[][]
 
 establishWebSocketConnection()
 preparePlayground()
+
+function placeSymbol(x: number, y: number)
+{
+    console.log("Placing symbol at: " + x + ", " + y)
+    ws.emit("place-symbol", gameId, x, y)
+}
+
 function establishWebSocketConnection()
 {
     // @ts-ignore
@@ -63,16 +70,30 @@ function insertSymbol(tile: HTMLDivElement, symbol: number)
 function configureWebsocket(ws: io.Socket)
 {
     ws.on("room-found", () => {
-            ws.emit("join-room", { gameId: gameId } )
+            ws.emit("join-room", gameId )
         }
     )
     ws.on("room-not-found", () => {
-            // TODO: Implement error HTML page
+            // TODO: Implement redirect to error HTML page
         }
     )
+    ws.on("room-is-full", () => {
+            // TODO: Implement redirect to error HTML page
+        }
+    )
+
     ws.on("game-data", (playground: number[][]) => {
             loadGrid(playground)
             // TODO: Load currently playing player
+        }
+    )
+    ws.on("symbol-placed", (x: number, y: number, symbol: string) => {
+            console.log("Server approved at: " + x + ", " + y)
+            playgroundDivArray[x][y].innerText = symbol
+        }
+    )
+    ws.on("symbol-not-placed", (reason: string) => {
+            console.log("Symbol not placed: " + reason)
         }
     )
 }

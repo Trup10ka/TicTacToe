@@ -35,28 +35,31 @@ function configureWebsocketServer(ioSocket: Server)
     ioSocket.on('connection', (socket) => {
 
             socket.on('find-room', (gameId) => {
-                    if (activeGames.has(gameId.gameId))
+                    if (activeGames.has(gameId))
                         ioSocket.to(socket.id).emit('room-found')
+                    // TODO: Game not found
                 }
             )
             socket.on('join-room', (gameId) => {
-                    const session = activeGames.get(gameId.gameId)!
-                    session.addPlayer(socket)
+                    const session = activeGames.get(gameId)!
+                    session.addPlayer(new Player(socket))
                     socket.join(gameId)
                 }
             )
             socket.on('get-game-data', (gameId) => {
-                    const session = activeGames.get(gameId.gameId)!
+                    const session = activeGames.get(gameId)!
                     ioSocket.to(socket.id).emit('game-data', session.playground)
                 }
             )
             socket.on('place-symbol', (gameId, x, y) => {
-                    const session = activeGames.get(gameId.gameId)!
+                    const session = activeGames.get(gameId)!
+                    const currentPlayer = session.currentPlayer!
                     const canPlaceTile = session.place(x, y, socket)
-                    if (canPlaceTile == 1)
-                        ioSocket.to(socket.id).emit('symbol-placed')
+
+                    if (canPlaceTile == 0)
+                        ioSocket.to(gameId).emit('symbol-placed', x, y, Symbol[currentPlayer.symbol!])
                     else
-                        ioSocket.to(socket.id).emit('symbol-not-placed', PlaceTileState[canPlaceTile])
+                        ioSocket.to(socket.id).emit('symbol-not-placed', processPlaceTileRequest(canPlaceTile))
                 }
             )
         }
