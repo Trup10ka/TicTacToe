@@ -1,3 +1,17 @@
+import { PlaceTileEvent } from "../tictactoe/data/placetilestate";
+import { SessionState } from "../tictactoe/data/sessionstate";
+
+export function initializeEmptyPlayground(size: number): number[][]
+{
+    let playground = new Array(size) as number[][]
+
+    for (let i = 0; i < size; i++)
+    {
+        playground[i] = new Array(size).fill(0)
+    }
+    return playground
+}
+
 export function generateGameId(): string
 {
     let id = ""

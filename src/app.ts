@@ -101,7 +101,8 @@ function createSession(gameData: GameData) : Session
         gameData.gameName,
         gameData.password,
         gameData.gameMode,
-        new Array(gameData.playground).fill(new Array(gameData.playground).fill(0))
+        initializeEmptyPlayground(gameData.playground),
+        SessionState.NOT_STARTED
     )
     activeGames.set(gameId, session)
 
