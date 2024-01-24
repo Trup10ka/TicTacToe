@@ -1,11 +1,12 @@
 import express from 'express'
 import http from 'http'
-import { Server, Socket } from 'socket.io'
+import { Server } from 'socket.io'
 import { Session } from "./tictactoe/data/session"
-import { generateGameId } from "./util/util";
-import { ClassicGameMode } from "./tictactoe/gamemode/classicgamemode";
+import { generateGameId, initializeEmptyPlayground, processPlaceTileRequest } from "./util/util";
 import { GameData } from "./tictactoe/data/gamedata";
-import { PlaceTileState } from "./tictactoe/data/placetilestate";
+import { Player } from "./tictactoe/data/player";
+import { Symbol } from "./tictactoe/data/symbol";
+import { SessionState } from "./tictactoe/data/sessionstate";
 
 const port = process.env.PORT || 8000
 const app = express()
@@ -70,24 +71,25 @@ function configureApp(appInstance: express.Express)
 function configureRouting(appInstance: express.Express)
 {
     appInstance.get('/', (req, res) => {
-            res.sendFile('views/lobby.html', { root: '.' })
+            res.sendFile('views/lobby.html', { root: '.' } )
         }
     )
 
     appInstance.get('/create', (req, res) => {
-            res.sendFile('views/gamecreate.html', { root: '.' })
+            res.sendFile('views/gamecreate.html', { root: '.' } )
         }
     )
     appInstance.get('/game', (req, res) => {
             const gameId = req.query.id!.toString()
-            res.sendFile('views/game.html', { root: '.' })
+            // TODO: Handle joining to existing game
+            res.sendFile('views/game.html', { root: '.' } )
         }
     )
 
     appInstance.post('/create-session', (req, res) => {
             const gameData = GameData.fromJSON(req.body) // TODO: Validate data, make it typed
             const session = createSession(gameData)
-            res.sendFile('views/game.html', { root: '.' })
+            res.sendFile('views/game.html', { root: '.' } )
             res.append('gameId', session.id)
         }
     )
