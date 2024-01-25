@@ -1,6 +1,6 @@
 import { GameMode } from "./gamemode";
 
-export class ClassicGameMode implements GameMode
+export class ClassicGamemode implements GameMode
 {
     checkWinCondition(board: number[][]): boolean
     {

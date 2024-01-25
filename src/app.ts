@@ -2,11 +2,11 @@ import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io'
 import { Session } from "./tictactoe/data/session"
-import { generateGameId, initializeEmptyPlayground, processPlaceTileRequest } from "./util/util";
-import { GameData } from "./tictactoe/data/gamedata";
-import { Player } from "./tictactoe/data/player";
-import { Symbol } from "./tictactoe/data/symbol";
-import { SessionState } from "./tictactoe/data/sessionstate";
+import { generateGameId, initializeEmptyPlayground, processPlaceTileRequest } from "./util/util"
+import { GameData } from "./tictactoe/data/game-data"
+import { Player } from "./tictactoe/data/player"
+import { Symbol } from "./tictactoe/data/symbol"
+import { SessionState } from "./tictactoe/data/session-state"
 
 const port = process.env.PORT || 8000
 const app = express()
@@ -19,6 +19,7 @@ configureApp(app)
 configureRouting(app)
 configureWebsocketServer(io)
 startServer(server)
+// TODO: Implement CLI client
 
 function startServer(server: http.Server)
 {

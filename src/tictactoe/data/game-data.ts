@@ -1,8 +1,8 @@
 import { GameMode } from "../gamemode/gamemode";
-import { ClassicGameMode } from "../gamemode/classicgamemode";
-import { WarGameMode } from "../gamemode/wargamemode";
-import { JesterGameMode } from "../gamemode/jestergamemode";
-import { EternityGameMode } from "../gamemode/eternitygamemode";
+import { ClassicGamemode } from "../gamemode/classic-gamemode";
+import { WarGamemode } from "../gamemode/war-gamemode";
+import { JesterGamemode } from "../gamemode/jester-gamemode";
+import { EternityGamemode } from "../gamemode/eternity-gamemode";
 
 export class GameData
 {
@@ -28,10 +28,10 @@ export class GameData
     {
         switch (gameMode)
         {
-            case "CLASSIC": return new ClassicGameMode()
-            case "WAR": return new WarGameMode()
-            case "JESTER": return new JesterGameMode()
-            case "ETERNITY": return new EternityGameMode()
+            case "CLASSIC": return new ClassicGamemode()
+            case "WAR": return new WarGamemode()
+            case "JESTER": return new JesterGamemode()
+            case "ETERNITY": return new EternityGamemode()
             default: throw new Error("Invalid game mode")
         }
     }

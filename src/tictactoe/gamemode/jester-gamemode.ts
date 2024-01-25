@@ -1,6 +1,6 @@
-import { GameMode } from "./gamemode";
+import {GameMode} from "./gamemode";
 
-export class EternityGameMode implements GameMode
+export class JesterGamemode implements GameMode
 {
     checkWinCondition(board: number[][]): boolean
     {
