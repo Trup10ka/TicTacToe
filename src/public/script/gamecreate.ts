@@ -14,7 +14,6 @@ function chooseGameMode(gameMode: string)
 async function gameCreate() : Promise<void>
 {
     const gameData = collectData()
-
     const response = await fetch("/create-session", {
                 method: "POST",
                 headers: {
@@ -29,12 +28,8 @@ async function gameCreate() : Promise<void>
             )
         }
     )
-    console.log(response)
-    if (response.ok)
-    {
-        const gameId = response.headers.get("gameId")!
-        window.location.href = `/game?id=${gameId}`
-    }
+    const gameId = response.headers.get("gameId")!
+    window.location.href = `/game?id=${gameId}`
 }
 
 function collectData() : { gameName: string, password: string, gameMode: string, gameSize: number }
