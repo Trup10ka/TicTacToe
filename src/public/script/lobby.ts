@@ -1,22 +1,26 @@
-configureSocket()
-function joinRandomGame()
-{
+    const gameIdField = document.getElementById('game-id-input')! as HTMLInputElement;
 
-}
-async function createNewGame() : Promise<void>
-{
-    const response = await fetch('/create')
+    function joinRandomGame()
+    {
+        throw new Error("Not implemented")
+    }
+    function createNewGame()
+    {
+        window.location.href = "/create";
+    }
 
-    if (response.ok)
-        window.location.href = response.url;
-}
+    async function tryToConnect()
+    {
+        const gameId = gameIdField.value
 
-function tryToConnect()
-{
-    console.log('Not yet implemented')
-}
+        if (gameId.length == 0)
+            return
 
-function configureSocket()
-{
-}
+        const response = await fetch('/join?id=' + gameId)
+
+        if (response.ok)
+            window.location.href = "/game?id=" + gameId
+        else
+            alert("Invalid game ID")
+    }
 

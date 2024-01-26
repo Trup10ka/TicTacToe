@@ -99,11 +99,24 @@ function configureRouting(appInstance: express.Express)
         }
     )
 
+    appInstance.get('/join', (req, res) => {
+            const gameId = req.query.id!.toString()
+            if (!activeGames.has(gameId))
+            {
+                logger.warn("Game not found")
+                res.sendStatus(464)
+                return;
+            }
+            res.append('gameId', gameId)
+            res.end()
+        }
+    )
+
     appInstance.post('/create-session', (req, res) => {
             const gameData = GameData.fromJSON(req.body) // TODO: Validate data, make it typed
             const session = createSession(gameData)
-            res.sendFile('views/game.html', { root: '.' } )
             res.append('gameId', session.id)
+            res.end()
         }
     )
     logger.log("Routing has been configured")
@@ -111,7 +124,7 @@ function configureRouting(appInstance: express.Express)
 function createSession(gameData: GameData) : Session
 {
     const gameId = generateGameId()
-    logger.log("Creating session with game id: " + generateGameId())
+    logger.log("Creating session with game id: " + gameId)
     const session = new Session(
         io,
         gameId,
