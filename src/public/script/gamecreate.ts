@@ -29,9 +29,10 @@ async function gameCreate() : Promise<void>
             )
         }
     )
+    console.log(response)
     if (response.ok)
     {
-        const gameId = response.headers.get("gameId")
+        const gameId = response.headers.get("gameId")!
         window.location.href = `/game?id=${gameId}`
     }
 }

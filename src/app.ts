@@ -7,6 +7,7 @@ import { GameData } from "./tictactoe/data/game-data"
 import { Player } from "./tictactoe/data/player"
 import { Symbol } from "./tictactoe/data/symbol"
 import { SessionState } from "./tictactoe/data/session-state"
+import { Logger } from "./util/logger";
 
 const port = process.env.PORT || 8000
 const app = express()
@@ -14,6 +15,8 @@ const server = http.createServer(app)
 const io = new Server()
 
 const activeGames: Map<string, Session> = new Map()
+
+export const logger = new Logger()
 
 configureApp(app)
 configureRouting(app)
@@ -24,14 +27,16 @@ startServer(server)
 function startServer(server: http.Server)
 {
     server.listen(port, () => {
-            console.log("Server is running on port: " + port)
+            logger.log(`Server is listening on port ${port}`)
         }
     )
 }
 
 function configureWebsocketServer(ioSocket: Server)
 {
+    logger.log("Configuring websocket server...")
     ioSocket.attach(server)
+    logger.log("Websocket server has been attached to HTTP server")
 
     ioSocket.on('connection', (socket) => {
 
@@ -65,15 +70,19 @@ function configureWebsocketServer(ioSocket: Server)
             )
         }
     )
+    logger.log("Websocket server has been configured")
 }
 function configureApp(appInstance: express.Express)
 {
+    logger.log("Configuring app...")
     appInstance.use(express.static('dist/public'))
     appInstance.use(express.json())
+    logger.log("App has been configured")
 }
 
 function configureRouting(appInstance: express.Express)
 {
+    logger.log("Configuring routing...")
     appInstance.get('/', (req, res) => {
             res.sendFile('views/lobby.html', { root: '.' } )
         }
@@ -97,10 +106,12 @@ function configureRouting(appInstance: express.Express)
             res.append('gameId', session.id)
         }
     )
+    logger.log("Routing has been configured")
 }
 function createSession(gameData: GameData) : Session
 {
     const gameId = generateGameId()
+    logger.log("Creating session with game id: " + generateGameId())
     const session = new Session(
         io,
         gameId,

@@ -45,4 +45,9 @@ export function processPlaceTileRequest(code: number) : string
     else
         return SessionState[code].toString()
 }
+
+export function date(): string
+{
+    return new Date().toLocaleString()
+}
 export * as utils from "./util"
