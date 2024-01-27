@@ -8,6 +8,7 @@ import { Player } from "./tictactoe/data/player"
 import { Symbol } from "./tictactoe/data/symbol"
 import { SessionState } from "./tictactoe/data/session-state"
 import { Logger } from "./util/logger";
+import { CLIClient } from "./cli/cli-client";
 
 const port = process.env.PORT || 8000
 const app = express()
@@ -22,7 +23,14 @@ configureApp(app)
 configureRouting(app)
 configureWebsocketServer(io)
 startServer(server)
-// TODO: Implement CLI client
+startCLI()
+
+function startCLI()
+{
+    CLIClient
+        .initialize()
+        .configureReaderListener()
+}
 
 function startServer(server: http.Server)
 {
