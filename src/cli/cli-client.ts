@@ -28,7 +28,14 @@ export class CLIClient
     public configureReaderListener()
     {
         this.reader.on('line', (line) => {
-                console.log(`Received line`)
+                const commandLine = line.split(' ')
+                const command = this.findCommand(commandLine[0])
+                if (command === null)
+                {
+                    logger.error(`Command "${commandLine}" is not recognized`)
+                    return
+                }
+                command.execute(commandLine.slice(1))
             }
         )
     }
@@ -43,5 +50,15 @@ export class CLIClient
                 this.commandMap.set(commandCallArray(command.name, command.options), command)
             }
         )
+    }
+
+    private findCommand(command: string): Command | null
+    {
+        let foundCommand: Command | null = null
+        this.commandMap.forEach((value, key) => {
+                if (key.includes(command)) foundCommand = value
+            }
+        )
+        return foundCommand
     }
 }
