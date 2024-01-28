@@ -3,7 +3,7 @@ export abstract class Command
     protected constructor(
         public readonly name: string,
         public readonly usage: string,
-        public readonly options: string[] = []
+        public readonly options: string[]
     )
     {}
 
