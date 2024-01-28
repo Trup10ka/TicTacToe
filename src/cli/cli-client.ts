@@ -4,26 +4,27 @@ import { Command } from "./commands/command";
 import { HelpCommand } from "./commands/help-command";
 import { ShutdownCommand } from "./commands/shutdown-command";
 import { immutableCopyOf } from "../util/util";
+import { Session } from "../tictactoe/data/session";
+import { ListCommand } from "./commands/list-command";
 export class CLIClient
 {
-
     private reader: Interface
 
     private commandMap: Map<string[], Command> = new Map()
 
-    private constructor(reader: Interface)
+    private constructor(reader: Interface, gamesMap: Map<string, Session>)
     {
         this.reader = reader
-        this.initializeCommands()
+        this.initializeCommands(gamesMap)
     }
 
-    public static initialize(): CLIClient
+    public static initialize(gamesMap: Map<string, Session>): CLIClient
     {
         const reader = createInterface(process.stdin, process.stdout)
 
         if (reader === null) logger.error("Failed to create reader")
 
-        return new CLIClient(reader)
+        return new CLIClient(reader, gamesMap)
     }
 
     public configureReaderListener()
@@ -41,10 +42,10 @@ export class CLIClient
         )
     }
 
-    private initializeCommands()
+    private initializeCommands(gamesMap: Map<string, Session>)
     {
         const commands: Command[] = [
-            new HelpCommand(), new ShutdownCommand()
+            new HelpCommand(), new ShutdownCommand(), new ListCommand(gamesMap)
         ]
         commands.forEach(command => {
                 this.commandMap.set([command.name, ...command.options], command)

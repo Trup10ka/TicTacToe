@@ -5,6 +5,12 @@ export function immutableCopyOf<T>(array: T[]): readonly T[]
 {
     return [...array]
 }
+
+export function immutableFrom<T>(iterable: Iterable<T>): readonly T[]
+{
+    return [...iterable]
+}
+
 export function initializeEmptyPlayground(size: number): number[][]
 {
     let playground = new Array(size) as number[][]

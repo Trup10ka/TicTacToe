@@ -28,7 +28,7 @@ startCLI()
 function startCLI()
 {
     CLIClient
-        .initialize()
+        .initialize(activeGames)
         .configureReaderListener()
 }
 
