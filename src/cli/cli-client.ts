@@ -47,8 +47,7 @@ export class CLIClient
             new HelpCommand(), new ShutdownCommand()
         ]
         commands.forEach(command => {
-                const commandCallArray = (commandName: string, options: string[]): string[] => { return [commandName, ...options] }
-                this.commandMap.set(commandCallArray(command.name, command.options), command)
+                this.commandMap.set([command.name, ...command.options], command)
             }
         )
         const helpCommand = this.findCommand("help") as HelpCommand
