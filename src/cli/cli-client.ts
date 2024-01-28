@@ -3,6 +3,7 @@ import { logger } from "../app";
 import { Command } from "./commands/command";
 import { HelpCommand } from "./commands/help-command";
 import { ShutdownCommand } from "./commands/shutdown-command";
+import { immutableCopyOf } from "../util/util";
 export class CLIClient
 {
 
@@ -50,13 +51,19 @@ export class CLIClient
                 this.commandMap.set(commandCallArray(command.name, command.options), command)
             }
         )
+        const helpCommand = this.findCommand("help") as HelpCommand
+        helpCommand.loadAllCommands(immutableCopyOf(commands))
     }
 
     private findCommand(command: string): Command | null
     {
         let foundCommand: Command | null = null
         this.commandMap.forEach((value, key) => {
-                if (key.includes(command)) foundCommand = value
+                if (key.includes(command))
+                {
+                    foundCommand = value
+                    return
+                }
             }
         )
         return foundCommand
