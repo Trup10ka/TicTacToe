@@ -7,7 +7,7 @@ export abstract class Command
     )
     {}
 
-    public abstract execute(args: string): void
+    public abstract execute(args: string[]): void
 
     public abstract getDescription(): string
 }

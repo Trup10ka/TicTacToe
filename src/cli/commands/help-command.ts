@@ -4,7 +4,7 @@ export class HelpCommand extends Command {
     constructor() {
         super("help", "help [command]", ["?", "h"])
     }
-    execute() {
+    execute(args: string[]) {
         console.log("Help command executed")
     }
     getDescription() {
