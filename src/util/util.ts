@@ -1,6 +1,10 @@
 import { PlaceTileEvent } from "../tictactoe/data/place-tile-state";
 import { SessionState } from "../tictactoe/data/session-state";
 
+export function immutableCopyOf<T>(array: T[]): readonly T[]
+{
+    return [...array]
+}
 export function initializeEmptyPlayground(size: number): number[][]
 {
     let playground = new Array(size) as number[][]
