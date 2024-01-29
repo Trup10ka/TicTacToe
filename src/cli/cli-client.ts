@@ -6,6 +6,7 @@ import { ShutdownCommand } from "./commands/shutdown-command";
 import { immutableCopyOf } from "../util/util";
 import { Session } from "../tictactoe/data/session";
 import { ListCommand } from "./commands/list-command";
+import {CreateCommand} from "./commands/create-command";
 export class CLIClient
 {
     private reader: Interface
@@ -30,6 +31,7 @@ export class CLIClient
     public configureReaderListener()
     {
         this.reader.on('line', (line) => {
+                if (line === "") return
                 const commandLine = line.split(' ')
                 const command = this.findCommand(commandLine[0])
                 if (command === null)
@@ -45,7 +47,7 @@ export class CLIClient
     private initializeCommands(gamesMap: Map<string, Session>)
     {
         const commands: Command[] = [
-            new HelpCommand(), new ShutdownCommand(), new ListCommand(gamesMap)
+            new HelpCommand(), new ShutdownCommand(), new ListCommand(gamesMap), new CreateCommand(gamesMap)
         ]
         commands.forEach(command => {
                 this.commandMap.set([command.name, ...command.options], command)

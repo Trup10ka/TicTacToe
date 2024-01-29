@@ -56,6 +56,19 @@ export function processPlaceTileRequest(code: number) : string
         return SessionState[code].toString()
 }
 
+export function getCommandArgumentPair(args: string[], index: number): { argument: string, value: string } | null
+{
+    const argument = args[index].replace(/-/g, "")
+    const value = args[index + 1]
+
+    if (argument === undefined )
+        return null
+    else if (value === undefined)
+        return { argument, value: "" }
+
+    return { argument, value }
+}
+
 export function getClassName(object: object): string
 {
     return object.constructor.name
