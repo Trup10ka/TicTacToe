@@ -1,7 +1,7 @@
 import { Command } from "./command";
 import { Session } from "../../tictactoe/data/session";
 import {logger} from "../../app";
-import { immutableFrom } from "../../util/util";
+import {getClassName, immutableFrom} from "../../util/util";
 import { SessionState } from "../../tictactoe/data/session-state";
 
 export class ListCommand extends Command
@@ -56,7 +56,7 @@ export class ListCommand extends Command
         }
         output.forEach((session, _) => {
                 console.log(`Session ID | Session name: ${session.id} | ${session.name}
-                 => Game mode: ${session.gameMode}, Grid size: ${session.playground.length}x${session.playground.length}, Session state: ${SessionState[session.sessionState]}`)
+                 => Game mode: ${getClassName(session.gameMode)}, Grid size: ${session.playground.length}x${session.playground.length}, Session state: ${SessionState[session.sessionState]}`)
             }
         )
     }

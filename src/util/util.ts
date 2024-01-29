@@ -56,6 +56,11 @@ export function processPlaceTileRequest(code: number) : string
         return SessionState[code].toString()
 }
 
+export function getClassName(object: object): string
+{
+    return object.constructor.name
+}
+
 export function date(): string
 {
     return new Date().toLocaleString()
