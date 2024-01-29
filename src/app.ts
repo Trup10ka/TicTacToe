@@ -129,7 +129,7 @@ function configureRouting(appInstance: express.Express)
     )
     logger.log("Routing has been configured")
 }
-function createSession(gameData: GameData) : Session
+export function createSession(gameData: GameData) : Session
 {
     const gameId = generateGameId()
     logger.log("Creating session with game id: " + gameId)
