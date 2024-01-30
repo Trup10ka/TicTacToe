@@ -4,7 +4,7 @@ import { Command } from "./commands/command";
 import { HelpCommand } from "./commands/help-command";
 import { ShutdownCommand } from "./commands/shutdown-command";
 import { immutableCopyOf } from "../util/util";
-import { Session } from "../tictactoe/data/session";
+import { Session } from "../tictactoe/session/session";
 import { ListCommand } from "./commands/list-command";
 import {CreateCommand} from "./commands/create-command";
 export class CLIClient

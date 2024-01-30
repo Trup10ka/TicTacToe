@@ -1,8 +1,8 @@
 import { Command } from "./command";
-import { Session } from "../../tictactoe/data/session";
+import { Session } from "../../tictactoe/session/session";
 import { logger } from "../../app";
 import { getCommandArgumentPair, immutableFrom } from "../../util/util";
-import { SessionState } from "../../tictactoe/data/session-state";
+import { SessionState } from "../../tictactoe/session/session-state";
 
 export class ListCommand extends Command
 {
