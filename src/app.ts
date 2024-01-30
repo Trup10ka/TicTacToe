@@ -30,6 +30,7 @@ function startCLI()
     CLIClient
         .initialize(activeGames)
         .configureReaderListener()
+    logger.log("CLI online, listening for commands")
 }
 
 function startServer(server: http.Server)
