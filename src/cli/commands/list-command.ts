@@ -20,12 +20,13 @@ export class ListCommand extends Command
             this.printOutput(immutableFrom(this.gamesMap.values()))
             return
         }
-        const specialIdentifier = args[0]
-        const output = this.getSessionWithCondition(specialIdentifier)
-
-        if (args[1] !== undefined)
-            this.sortOutputBy(args[1], output)
-
+        const specialIdentifier = getCommandArgumentPair(args, 0)
+        if (specialIdentifier!.value === "")
+        {
+            logger.error("Provided argument is missing a value")
+            return
+        }
+        const output = this.getSessionWithCondition(specialIdentifier!)
         this.printOutput(output)
     }
 
@@ -34,19 +35,21 @@ export class ListCommand extends Command
         return "Lists all the current games in progress or idle ones. Can also list games by a specific user, specific game mode, or grid size."
     }
 
-    private getSessionWithCondition(specialIdentifier: string): Session[]
+    private getSessionWithCondition(specialIdentifier: { argument: string, value: string }): Session[]
     {
-        switch (specialIdentifier)
+        switch (specialIdentifier.argument)
         {
-
+            case "gm":
+                return immutableFrom(this.gamesMap.values()).filter(session => session.gameMode.getName() === specialIdentifier.value)
+            case "gs":
+                return immutableFrom(this.gamesMap.values()).filter(session => session.playground.length === parseInt(specialIdentifier.value))
+            default:
+            {
+                logger.error("Provided argument is not recognized")
+                return []
+            }
         }
-        return []
     }
-    private sortOutputBy(by: string, output: Session[])
-    {
-        return []
-    }
-
     private printOutput(output: readonly Session[])
     {
         if (output.length === 0)
