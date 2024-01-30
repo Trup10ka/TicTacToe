@@ -1,7 +1,10 @@
 # Tic Tac Toe
-## Description
-Typescript / Node web application for multiplayer *Tic Tac Toe*.
+Typescript / Node web application for multiplayer *Tic Tac Toe*. 
 
+Classic TTT experience with your friends, or with random people. You have a choice of joining a game by its ID, 
+or try to join to a random public game (without password).
+
+You have a choice of 4 game modes, each with its own rules and special abilities.
 ## Game Modes
 - **<ins>Classic</ins>**
   - Classic Tic Tac Toe game, when someone gets the match of predefined symbols in a row, column or diagonal, they win.
@@ -14,6 +17,7 @@ Typescript / Node web application for multiplayer *Tic Tac Toe*.
 - **<ins>Eternity</ins>**
   - In this game mode, there are no special abilities, **but player wins after 3 wins in a row.**. Rules are the same
 
-## [How does it work?](https://github.com/Trup10ka/TicTacToe/wiki)
+## About this project
+Anything you need to know you may find [here](https://github.com/Trup10ka/TicTacToe/wiki)
 
-### You can play the game anytime here: [Tic Tac Toe](https://s-friedl.dev.yspsejecna.net)
+### You can play the game anytime here: [Tic Tac Toe](https://s-friedl.dev.spsejecna.net)
