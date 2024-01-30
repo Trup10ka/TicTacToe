@@ -1,16 +1,13 @@
 import { Command } from "./command";
-import {createSession, logger} from "../../app";
-import { Session } from "../../tictactoe/data/session";
+import { createSession, logger} from "../../app";
 import { getCommandArgumentPair } from "../../util/util";
-import {GameData} from "../../tictactoe/data/game-data";
+import { GameData } from "../../tictactoe/data/game-data";
 
 export class CreateCommand extends Command
 {
-    constructor(
-        private activeGames: Map<string, Session>
-    )
+    constructor()
     {
-        super("create", "create [game-size] [game-mode] [name] [password]", ["c"]);
+        super("create", "create [-gm, -gs, -n, -p] (value)", ["c"]);
     }
     public execute(args: string[])
     {
@@ -31,7 +28,7 @@ export class CreateCommand extends Command
     }
     public getDescription()
     {
-        return "Creates a new game with provided arguments. Game must be specified with game mode and game size, rest is optional";
+        return "Creates a new game with provided arguments. Game must be specified with game mode (-gm) and game size (-gs), rest is optional (-n = name, -p = password)";
     }
 
     private parseArguments(args: string[]): Map<string, string>
