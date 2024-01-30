@@ -8,6 +8,7 @@ import { Player } from "./tictactoe/data/player"
 import { Symbol } from "./tictactoe/data/symbol"
 import { SessionState } from "./tictactoe/session/session-state"
 import { Logger } from "./util/logger";
+import { CLIClient } from "./cli/cli-client";
 
 const port = process.env.PORT || 8000
 const app = express()
@@ -22,7 +23,15 @@ configureApp(app)
 configureRouting(app)
 configureWebsocketServer(io)
 startServer(server)
-// TODO: Implement CLI client
+startCLI()
+
+function startCLI()
+{
+    CLIClient
+        .initialize(activeGames)
+        .configureReaderListener()
+    logger.log("CLI online, listening for commands")
+}
 
 function startServer(server: http.Server)
 {
@@ -121,7 +130,7 @@ function configureRouting(appInstance: express.Express)
     )
     logger.log("Routing has been configured")
 }
-function createSession(gameData: GameData) : Session
+export function createSession(gameData: GameData) : Session
 {
     const gameId = generateGameId()
     logger.log("Creating session with game id: " + gameId)

@@ -5,4 +5,6 @@ export interface GameMode
     placeGameTile(x: number, y: number): boolean
 
     nextPlayer(): boolean
+
+    getName(): string
 }

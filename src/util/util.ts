@@ -1,6 +1,16 @@
 import { PlaceTileEvent } from "../tictactoe/session/place-tile-state";
 import { SessionState } from "../tictactoe/session/session-state";
 
+export function immutableCopyOf<T>(array: T[]): readonly T[]
+{
+    return [...array]
+}
+
+export function immutableFrom<T>(iterable: Iterable<T>): readonly T[]
+{
+    return [...iterable]
+}
+
 export function initializeEmptyPlayground(size: number): number[][]
 {
     let playground = new Array(size) as number[][]
@@ -44,6 +54,19 @@ export function processPlaceTileRequest(code: number) : string
         return PlaceTileEvent[code].toString()
     else
         return SessionState[code].toString()
+}
+
+export function getCommandArgumentPair(args: string[], index: number): { argument: string, value: string } | null
+{
+    const argument = args[index].replace(/-/g, "")
+    const value = args[index + 1]
+
+    if (argument === undefined )
+        return null
+    else if (value === undefined)
+        return { argument, value: "" }
+
+    return { argument, value }
 }
 
 export function date(): string
