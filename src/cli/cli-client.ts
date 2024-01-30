@@ -47,7 +47,7 @@ export class CLIClient
     private initializeCommands(gamesMap: Map<string, Session>)
     {
         const commands: Command[] = [
-            new HelpCommand(), new ShutdownCommand(), new ListCommand(gamesMap), new CreateCommand(gamesMap)
+            new HelpCommand(), new ShutdownCommand(), new ListCommand(gamesMap), new CreateCommand()
         ]
         commands.forEach(command => {
                 this.commandMap.set([command.name, ...command.options], command)
