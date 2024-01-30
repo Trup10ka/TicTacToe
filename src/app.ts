@@ -1,5 +1,6 @@
 import express from 'express'
 import http from 'http'
+import path from "path"
 import { Server } from 'socket.io'
 import { Session } from "./tictactoe/session/session"
 import { generateGameId, initializeEmptyPlayground, processPlaceTileRequest } from "./util/util"
@@ -7,13 +8,14 @@ import { GameData } from "./tictactoe/data/game-data"
 import { Player } from "./tictactoe/data/player"
 import { Symbol } from "./tictactoe/data/symbol"
 import { SessionState } from "./tictactoe/session/session-state"
-import { Logger } from "./util/logger";
-import { CLIClient } from "./cli/cli-client";
+import { Logger } from "./util/logger"
+import { CLIClient } from "./cli/cli-client"
 
 const port = process.env.PORT || 8000
 const app = express()
 const server = http.createServer(app)
 const io = new Server()
+const projectPath = path.join(__dirname, '..')
 
 const activeGames: Map<string, Session> = new Map()
 
@@ -84,7 +86,7 @@ function configureWebsocketServer(ioSocket: Server)
 function configureApp(appInstance: express.Express)
 {
     logger.log("Configuring app...")
-    appInstance.use(express.static('dist/public'))
+    appInstance.use(express.static(path.join(__dirname, 'public')))
     appInstance.use(express.json())
     logger.log("App has been configured")
 }
@@ -93,18 +95,18 @@ function configureRouting(appInstance: express.Express)
 {
     logger.log("Configuring routing...")
     appInstance.get('/', (req, res) => {
-            res.sendFile('views/lobby.html', { root: '.' } )
+            res.sendFile('views/lobby.html', { root: projectPath } )
         }
     )
 
     appInstance.get('/create', (req, res) => {
-            res.sendFile('views/gamecreate.html', { root: '.' } )
+            res.sendFile('views/gamecreate.html', { root: projectPath } )
         }
     )
     appInstance.get('/game', (req, res) => {
             const gameId = req.query.id!.toString()
             // TODO: Handle joining to existing game
-            res.sendFile('views/game.html', { root: '.' } )
+            res.sendFile('views/game.html', { root: projectPath } )
         }
     )
 
