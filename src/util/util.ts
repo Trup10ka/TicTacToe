@@ -69,11 +69,6 @@ export function getCommandArgumentPair(args: string[], index: number): { argumen
     return { argument, value }
 }
 
-export function getClassName(object: object): string
-{
-    return object.constructor.name
-}
-
 export function date(): string
 {
     return new Date().toLocaleString()
