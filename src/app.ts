@@ -1,12 +1,12 @@
 import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io'
-import { Session } from "./tictactoe/data/session"
+import { Session } from "./tictactoe/session/session"
 import { generateGameId, initializeEmptyPlayground, processPlaceTileRequest } from "./util/util"
 import { GameData } from "./tictactoe/data/game-data"
 import { Player } from "./tictactoe/data/player"
 import { Symbol } from "./tictactoe/data/symbol"
-import { SessionState } from "./tictactoe/data/session-state"
+import { SessionState } from "./tictactoe/session/session-state"
 import { Logger } from "./util/logger";
 
 const port = process.env.PORT || 8000

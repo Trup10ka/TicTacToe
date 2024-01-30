@@ -1,8 +1,8 @@
 import { Server, Socket } from "socket.io";
 import { GameMode } from "../gamemode/gamemode";
 import { PlaceTileEvent } from "./place-tile-state";
-import { Player } from "./player";
-import { Symbol } from "./symbol";
+import { Player } from "../data/player";
+import { Symbol } from "../data/symbol";
 import { SessionState } from "./session-state";
 
 export class Session

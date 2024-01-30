@@ -1,5 +1,5 @@
-import { PlaceTileEvent } from "../tictactoe/data/place-tile-state";
-import { SessionState } from "../tictactoe/data/session-state";
+import { PlaceTileEvent } from "../tictactoe/session/place-tile-state";
+import { SessionState } from "../tictactoe/session/session-state";
 
 export function initializeEmptyPlayground(size: number): number[][]
 {
