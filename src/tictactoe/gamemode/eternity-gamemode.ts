@@ -16,4 +16,9 @@ export class EternityGamemode implements GameMode
     {
         throw new Error("Method not implemented.")
     }
+
+    public getName(): string
+    {
+        return "ETERNITY"
+    }
 }

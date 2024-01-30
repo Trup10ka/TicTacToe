@@ -17,4 +17,8 @@ export class WarGamemode implements GameMode
         throw new Error("Method not implemented.")
     }
 
+    public getName(): string
+    {
+        return "WAR"
+    }
 }

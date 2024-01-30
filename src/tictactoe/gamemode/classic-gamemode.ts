@@ -16,4 +16,9 @@ export class ClassicGamemode implements GameMode
     {
         throw new Error("Method not implemented.")
     }
+
+    public getName(): string
+    {
+        return "CLASSIC"
+    }
 }
