@@ -1,4 +1,4 @@
-import { PlaceTileEvent } from "../tictactoe/session/place-tile-state";
+import { PlaceTileResult } from "../tictactoe/session/place-tile-result";
 import { SessionState } from "../tictactoe/session/session-state";
 
 export function immutableCopyOf<T>(array: T[]): readonly T[]
@@ -51,7 +51,7 @@ export function getRandomNumber(): number
 export function processPlaceTileRequest(code: number) : string
 {
     if (code <= 3)
-        return PlaceTileEvent[code].toString()
+        return PlaceTileResult[code].toString()
     else
         return SessionState[code].toString()
 }

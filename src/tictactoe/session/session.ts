@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { GameMode } from "../gamemode/gamemode";
-import { PlaceTileEvent } from "./place-tile-state";
+import { PlaceTileResult } from "./place-tile-result";
 import { Player } from "../data/player";
 import { Symbol } from "../data/symbol";
 import { SessionState } from "./session-state";
@@ -25,9 +25,9 @@ export class Session
 
     public place(x: number, y: number, socket: Socket) : number
     {
-        if (this.sessionState == SessionState.NOT_STARTED) return SessionState.NOT_STARTED
-        if (this.playground[x][y] != 0) return PlaceTileEvent.ALREADY_PLACED_TILE
-        else if (this.currentPlayer!.playerSocket.id != socket.id) return PlaceTileEvent.NOT_YOUR_TURN
+        if (this.sessionState === SessionState.NOT_STARTED) return SessionState.NOT_STARTED
+        else if (this.currentPlayer!.playerSocket.id !== socket.id) return PlaceTileResult.NOT_YOUR_TURN
+
 
         return this.placeTile(x, y, socket)
     }
@@ -56,6 +56,6 @@ export class Session
     {
         this.playground[x][y] = this.currentPlayer!.symbol!
         this.currentPlayer = this.players.find(player => player.playerSocket.id != socket.id)
-        return PlaceTileEvent.SUCCESS
+        return PlaceTileResult.SUCCESS
     }
 }
