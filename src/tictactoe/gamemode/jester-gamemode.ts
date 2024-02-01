@@ -1,5 +1,6 @@
-import {GameMode} from "./gamemode";
-import {PlaceTileResult} from "../session/place-tile-result";
+import { GameMode } from "./gamemode"
+import { PlaceTileResult } from "../session/place-tile-result"
+import { Symbol } from "../data/symbol"
 
 export class JesterGamemode implements GameMode
 {
@@ -13,7 +14,7 @@ export class JesterGamemode implements GameMode
         throw new Error("Method not implemented.")
     }
 
-    public canPlaceTile(x: number, y: number): PlaceTileResult
+    public canPlaceTile(x: number, y: number, symbol: Symbol): PlaceTileResult
     {
         throw new Error("Method not implemented.")
     }

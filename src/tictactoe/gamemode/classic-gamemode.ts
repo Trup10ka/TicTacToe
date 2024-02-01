@@ -1,5 +1,6 @@
-import { GameMode } from "./gamemode";
-import { PlaceTileResult } from "../session/place-tile-result";
+import { GameMode } from "./gamemode"
+import { PlaceTileResult } from "../session/place-tile-result"
+import { Symbol } from "../data/symbol"
 
 export class ClassicGamemode implements GameMode
 {
@@ -8,14 +9,13 @@ export class ClassicGamemode implements GameMode
         throw new Error("Method not implemented.")
     }
 
-    public canPlaceTile(x: number, y: number): PlaceTileResult
-    {
-        return PlaceTileResult.SUCCESS
-    }
-
     public nextPlayer(): boolean
     {
         throw new Error("Method not implemented.")
+    }
+    public canPlaceTile(x: number, y: number, symbol: Symbol): PlaceTileResult
+    {
+        return 0;
     }
 
     public getName(): string
