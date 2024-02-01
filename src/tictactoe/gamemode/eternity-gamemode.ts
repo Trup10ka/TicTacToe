@@ -1,4 +1,5 @@
 import { GameMode } from "./gamemode";
+import {PlaceTileResult} from "../session/place-tile-result";
 
 export class EternityGamemode implements GameMode
 {
@@ -12,7 +13,7 @@ export class EternityGamemode implements GameMode
         throw new Error("Method not implemented.")
     }
 
-    public placeGameTile(x: number, y: number): boolean
+    public canPlaceTile(x: number, y: number): PlaceTileResult
     {
         throw new Error("Method not implemented.")
     }

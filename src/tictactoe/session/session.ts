@@ -28,6 +28,9 @@ export class Session
         if (this.sessionState === SessionState.NOT_STARTED) return SessionState.NOT_STARTED
         else if (this.currentPlayer!.playerSocket.id !== socket.id) return PlaceTileResult.NOT_YOUR_TURN
 
+        const canPlaceTile = this.gameMode.canPlaceTile(x, y)
+        if (!canPlaceTile)
+            return canPlaceTile
 
         return this.placeTile(x, y, socket)
     }
