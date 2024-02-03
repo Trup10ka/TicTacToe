@@ -1,5 +1,5 @@
-import kleur from "kleur";
-import { date } from "./util";
+import { date } from "../util";
+import { Palette } from "./color/palette";
 
 export class Logger
 {
@@ -8,19 +8,26 @@ export class Logger
     public log(message: string)
     {
         this.output.write(`[${date()}] `)
-        this.output.write(kleur.blue("INFO"))
+        this.output.write(Palette.blue("INFO"))
         this.output.write(` - ${message}\n`)
     }
     public error(message: string)
     {
         this.output.write(`[${date()}] `)
-        this.output.write(kleur.red("ERROR"))
+        this.output.write(Palette.red("ERROR"))
         this.output.write(` - ${message}\n`)
     }
     public warn(message: string)
     {
         this.output.write(`[${date()}] `)
-        this.output.write(kleur.yellow("WARNING"))
+        this.output.write(Palette.yellow("WARNING"))
+        this.output.write(` - ${message}\n`)
+    }
+
+    public success(message: string)
+    {
+        this.output.write(`[${date()}] `)
+        this.output.write(Palette.green("SUCCESS"))
         this.output.write(` - ${message}\n`)
     }
 }
