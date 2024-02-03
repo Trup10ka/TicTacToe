@@ -4,4 +4,5 @@ dist/tictactoe
 dist/util
 dist/cli
 node_modules
+test
 .idea
