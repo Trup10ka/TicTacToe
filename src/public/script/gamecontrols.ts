@@ -1,5 +1,6 @@
 const url = new URL(window.location.href);
 const playgroundGrid = document.getElementById("playground-grid") as HTMLDivElement;
+const nameInputButton = document.getElementById("enter-name-button") as HTMLButtonElement
 const gameId = url.searchParams.get("id")!
 // @ts-ignore
 let ws: io.Socket
@@ -22,6 +23,8 @@ function establishWebSocketConnection()
     configureWebsocket(ws)
 
     ws.emit("find-room", gameId)
+
+    nameInputButton.disabled = false
 }
 
 function preparePlayground()
