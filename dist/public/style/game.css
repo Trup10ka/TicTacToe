@@ -93,11 +93,12 @@
 }
 
 .popup {
-    display: block;
+    display: flex;
+    justify-content: center;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-49%, -50%);
     background-color: #aafc9a;
     padding: 20px 10px;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.31);
@@ -109,6 +110,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    width: 80%;
 }
 
 .popup-content > * {
