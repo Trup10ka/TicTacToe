@@ -88,7 +88,12 @@ function configureWebsocketServer(ioSocket: Server)
                         return
                     }
                     player.name = playerName
-                    ioSocket.to(socket.id).emit('player-name-set', playerName)
+                    if (session.getSessionSize() === 2)
+                    {
+                        ioSocket.to(socket.id).emit('player-name-set', session.currentPlayer!.name, Symbol[session.currentPlayer!.symbol!])
+                        return
+                    }
+                    ioSocket.to(socket.id).emit('player-name-set', playerName, Symbol[player.symbol!])
                 }
             )
         }
