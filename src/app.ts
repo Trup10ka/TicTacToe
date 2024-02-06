@@ -79,6 +79,18 @@ function configureWebsocketServer(ioSocket: Server)
                         ioSocket.to(socket.id).emit('symbol-not-placed', processPlaceTileRequest(canPlaceTile))
                 }
             )
+            socket.on('set-player-name', (gameId, playerName) => {
+                    const session = activeGames.get(gameId)!
+                    const player = session.getPlayer(socket)
+                    if (!player)
+                    {
+                        logger.warn("Player tried to join into session where he doesn't possess a socket")
+                        return
+                    }
+                    player.name = playerName
+                    ioSocket.to(socket.id).emit('player-name-set', playerName)
+                }
+            )
         }
     )
     logger.log("Websocket server has been configured")
