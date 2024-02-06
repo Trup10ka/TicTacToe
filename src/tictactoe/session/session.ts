@@ -29,7 +29,8 @@ export class Session
         else if (this.currentPlayer!.playerSocket.id !== socket.id) return PlaceTileResult.NOT_YOUR_TURN
 
         const canPlaceTile = this.gameMode.canPlaceTile(x, y, this.playground[x][y])
-        if (!canPlaceTile)
+
+        if (canPlaceTile !== PlaceTileResult.SUCCESS)
             return canPlaceTile
 
         return this.placeTile(x, y, socket)
@@ -65,7 +66,7 @@ export class Session
         return this.players.length
     }
 
-    private placeTile(x: number, y: number, socket: Socket): number
+    private placeTile(x: number, y: number, socket: Socket): PlaceTileResult
     {
         this.playground[x][y] = this.currentPlayer!.symbol!
         this.currentPlayer = this.players.find(player => player.playerSocket.id != socket.id)
