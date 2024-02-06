@@ -1,16 +1,12 @@
-import { Server, Socket } from "socket.io";
-import { GameMode } from "../gamemode/gamemode";
-import { PlaceTileResult } from "./place-tile-result";
-import { Player } from "../data/player";
-import { Symbol } from "../data/symbol";
-import { SessionState } from "./session-state";
+import { Server, Socket } from "socket.io"
+import { GameMode } from "../gamemode/gamemode"
+import { PlaceTileResult } from "./place-tile-result"
+import { Player } from "../data/player"
+import { Symbol } from "../data/symbol"
+import { SessionState } from "./session-state"
 
 export class Session
 {
-    private players: Player[] = []
-
-    public currentPlayer?: Player
-
     constructor(
         private io: Server,
         public id: string,
@@ -22,6 +18,10 @@ export class Session
     )
     {
     }
+
+    private players: Player[] = []
+
+    public currentPlayer?: Player
 
     public place(x: number, y: number, socket: Socket) : number
     {
