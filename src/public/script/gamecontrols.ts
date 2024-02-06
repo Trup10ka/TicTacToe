@@ -1,8 +1,13 @@
 const url = new URL(window.location.href)
+
+const currentPlayerName = document.getElementById("currently-playing-player") as HTMLDivElement
+const currentPlayerSymbol = document.getElementById("player-char") as HTMLDivElement
 const playgroundGrid = document.getElementById("playground-grid") as HTMLDivElement
+
 const nameInputButton = document.getElementById("enter-name-button") as HTMLButtonElement
 const nameInputField = document.getElementById("player-name-input") as HTMLInputElement
 const popup = document.getElementById("popup") as HTMLDivElement
+
 const gameId = url.searchParams.get("id")!
 
 // @ts-ignore
@@ -94,7 +99,11 @@ function configureWebsocket(ws: io.Socket)
             // TODO: Implement redirect to error HTML page
         }
     )
-
+    ws.on("player-name-set", (playerName: string, playerSymbol: string) => {
+            currentPlayerName.innerText = playerName
+            currentPlayerSymbol.innerText = playerSymbol
+        }
+    )
     ws.on("game-data", (playground: number[][]) => {
             loadGrid(playground)
             // TODO: Load currently playing player
