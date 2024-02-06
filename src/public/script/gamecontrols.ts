@@ -1,7 +1,10 @@
-const url = new URL(window.location.href);
-const playgroundGrid = document.getElementById("playground-grid") as HTMLDivElement;
+const url = new URL(window.location.href)
+const playgroundGrid = document.getElementById("playground-grid") as HTMLDivElement
 const nameInputButton = document.getElementById("enter-name-button") as HTMLButtonElement
+const nameInputField = document.getElementById("player-name-input") as HTMLInputElement
+const popup = document.getElementById("popup") as HTMLDivElement
 const gameId = url.searchParams.get("id")!
+
 // @ts-ignore
 let ws: io.Socket
 let playgroundDivArray: HTMLDivElement[][]
@@ -13,6 +16,13 @@ function placeSymbol(x: number, y: number)
 {
     console.log("Placing symbol at: " + x + ", " + y)
     ws.emit("place-symbol", gameId, x, y)
+}
+
+function queryName()
+{
+    const playerName = nameInputField.value
+    ws.emit("set-player-name", gameId, playerName)
+    popup.classList.toggle("hide")
 }
 
 function establishWebSocketConnection()
