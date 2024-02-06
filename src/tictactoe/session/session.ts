@@ -60,6 +60,11 @@ export class Session
         return this.players.find(player => player.playerSocket.id === socket.id)
     }
 
+    public getSessionSize() : number
+    {
+        return this.players.length
+    }
+
     private placeTile(x: number, y: number, socket: Socket): number
     {
         this.playground[x][y] = this.currentPlayer!.symbol!
