@@ -13,9 +13,9 @@ export class ClassicGamemode implements GameMode
     {
         throw new Error("Method not implemented.")
     }
-    public canPlaceTile(x: number, y: number, symbol: Symbol): PlaceTileResult
+    public canPlaceTile(symbolAtChosenCords: Symbol): PlaceTileResult
     {
-        return 0;
+        return symbolAtChosenCords === Symbol.EMPTY ? PlaceTileResult.SUCCESS : PlaceTileResult.ALREADY_PLACED_TILE;
     }
 
     public getName(): string

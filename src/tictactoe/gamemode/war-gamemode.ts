@@ -1,5 +1,5 @@
 import { GameMode } from "./gamemode"
-import {PlaceTileResult} from "../session/place-tile-result"
+import { PlaceTileResult } from "../session/place-tile-result"
 import { Symbol } from "../data/symbol"
 
 export class WarGamemode implements GameMode
@@ -14,7 +14,7 @@ export class WarGamemode implements GameMode
         throw new Error("Method not implemented.")
     }
 
-    public canPlaceTile(x: number, y: number, symbol: Symbol): PlaceTileResult
+    public canPlaceTile(symbol: Symbol): PlaceTileResult
     {
         throw new Error("Method not implemented.")
     }

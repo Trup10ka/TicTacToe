@@ -28,7 +28,7 @@ export class Session
         if (this.sessionState === SessionState.NOT_STARTED) return SessionState.NOT_STARTED
         else if (this.currentPlayer!.playerSocket.id !== socket.id) return PlaceTileResult.NOT_YOUR_TURN
 
-        const canPlaceTile = this.gameMode.canPlaceTile(x, y, this.playground[x][y])
+        const canPlaceTile = this.gameMode.canPlaceTile(this.playground[x][y])
 
         if (canPlaceTile !== PlaceTileResult.SUCCESS)
             return canPlaceTile

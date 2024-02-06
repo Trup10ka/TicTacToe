@@ -14,7 +14,7 @@ export class EternityGamemode implements GameMode
         throw new Error("Method not implemented.")
     }
 
-    public canPlaceTile(x: number, y: number, symbol: Symbol): PlaceTileResult
+    public canPlaceTile(symbol: Symbol): PlaceTileResult
     {
         throw new Error("Method not implemented.")
     }
