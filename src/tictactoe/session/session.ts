@@ -55,6 +55,11 @@ export class Session
         this.players.push(player)
     }
 
+    public getPlayer(socket: Socket) : Player | undefined
+    {
+        return this.players.find(player => player.playerSocket.id === socket.id)
+    }
+
     private placeTile(x: number, y: number, socket: Socket): number
     {
         this.playground[x][y] = this.currentPlayer!.symbol!
