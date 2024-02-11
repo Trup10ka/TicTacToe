@@ -81,19 +81,7 @@ function configureWebsocketServer(ioSocket: Server)
             )
             socket.on('set-player-name', (gameId, playerName) => {
                     const session = activeGames.get(gameId)!
-                    const player = session.getPlayer(socket)
-                    if (!player)
-                    {
-                        logger.warn("Player tried to join into session where he doesn't possess a socket")
-                        return
-                    }
-                    player.name = playerName
-                    if (session.getSessionSize() === 2)
-                    {
-                        ioSocket.to(socket.id).emit('player-name-set', session.currentPlayer!.name, Symbol[session.currentPlayer!.symbol!])
-                        return
-                    }
-                    ioSocket.to(socket.id).emit('player-name-set', playerName, Symbol[player.symbol!])
+                    session.setPlayerName(socket, playerName)
                 }
             )
         }

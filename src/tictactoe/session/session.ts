@@ -4,6 +4,7 @@ import { PlaceTileResult } from "./place-tile-result"
 import { Player } from "../data/player"
 import { Symbol } from "../data/symbol"
 import { SessionState } from "./session-state"
+import {logger} from "../../app";
 
 export class Session
 {
@@ -54,6 +55,23 @@ export class Session
             this.sessionState = SessionState.IN_PROGRESS
         }
         this.players.push(player)
+    }
+
+    public setPlayerName(socket: Socket, playerName: string)
+    {
+        const player = this.getPlayer(socket)
+        if (!player)
+        {
+            logger.warn("Player tried to join into session where he doesn't possess a socket")
+            return
+        }
+        player.name = playerName
+        if (this.players.length === 2)
+        {
+            this.io.to(socket.id).emit('player-name-set', this.currentPlayer!.name, Symbol[this.currentPlayer!.symbol!])
+            return
+        }
+        this.io.to(socket.id).emit('player-name-set', playerName, Symbol[player.symbol!])
     }
 
     public getPlayer(socket: Socket) : Player | undefined
