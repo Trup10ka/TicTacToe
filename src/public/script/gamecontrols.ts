@@ -118,4 +118,9 @@ function configureWebsocket(ws: io.Socket)
             console.log("Symbol not placed: " + reason)
         }
     )
+
+    ws.on("game-end", (winningSymbol: string) => {
+            console.log("Game ended, winning symbol: " + winningSymbol)
+        }
+    )
 }

@@ -77,6 +77,8 @@ function configureWebsocketServer(ioSocket: Server)
                         ioSocket.to(gameId).emit('symbol-placed', x, y, Symbol[currentPlayer.symbol!])
                     else
                         ioSocket.to(socket.id).emit('symbol-not-placed', processPlaceTileRequest(canPlaceTile))
+
+                    session.checkWinCondition()
                 }
             )
             socket.on('set-player-name', (gameId, playerName) => {

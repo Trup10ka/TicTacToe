@@ -26,7 +26,7 @@ export class Session
 
     public place(x: number, y: number, socket: Socket) : number
     {
-        if (this.sessionState === SessionState.NOT_STARTED) return SessionState.NOT_STARTED
+        if (this.sessionState !== SessionState.IN_PROGRESS) return this.sessionState
         else if (this.currentPlayer!.playerSocket.id !== socket.id) return PlaceTileResult.NOT_YOUR_TURN
 
         const canPlaceTile = this.gameMode.canPlaceTile(this.playground[x][y])
@@ -35,6 +35,15 @@ export class Session
             return canPlaceTile
 
         return this.placeTile(x, y, socket)
+    }
+
+    public checkWinCondition()
+    {
+        const winCondition = this.gameMode.checkWinCondition(this.playground)
+        if (winCondition === 0)
+            return
+        this.sessionState = SessionState.FINISHED
+        this.io.to(this.id).emit('game-end', this.getPlayerBySymbol(winCondition), Symbol[winCondition])
     }
 
     public addPlayer(player: Player)
@@ -59,13 +68,14 @@ export class Session
 
     public setPlayerName(socket: Socket, playerName: string)
     {
-        const player = this.getPlayer(socket)
+        const player = this.getPlayerBySocket(socket)
         if (!player)
         {
             logger.warn("Player tried to join into session where he doesn't possess a socket")
             return
         }
         player.name = playerName
+
         if (this.players.length === 2)
         {
             this.io.to(socket.id).emit('player-name-set', this.currentPlayer!.name, Symbol[this.currentPlayer!.symbol!])
@@ -74,16 +84,15 @@ export class Session
         this.io.to(socket.id).emit('player-name-set', playerName, Symbol[player.symbol!])
     }
 
-    public getPlayer(socket: Socket) : Player | undefined
+    public getPlayerBySocket(socket: Socket) : Player | undefined
     {
         return this.players.find(player => player.playerSocket.id === socket.id)
     }
 
-    public getSessionSize() : number
+    public getPlayerBySymbol(symbol: Symbol): Player | undefined
     {
-        return this.players.length
+        return this.players.find(player => player.symbol === symbol)
     }
-
     private placeTile(x: number, y: number, socket: Socket): PlaceTileResult
     {
         this.playground[x][y] = this.currentPlayer!.symbol!
