@@ -17,11 +17,17 @@
             </div>
         </header>
         <main>
-            <div id="popup" class="popup">
+            <div id="popup" class="popup z-1">
                 <div class="popup-content">
                     <label for="player-name-input">Enter your name</label>
                     <input class="box-element" type="text" id="player-name-input"/>
                     <button id="enter-name-button" class="introduction-box-button box-element" onclick="queryName()" disabled>Enter</button>
+                </div>
+            </div>
+            <div id="win-popup" class="popup z-2 hide">
+                <div class="popup-content">
+                    <div id="winning-player-name"></div>
+                    <div id="winning-player-symbol"></div>
                 </div>
             </div>
             <div class="box-element" id="playground-grid-container">
