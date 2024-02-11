@@ -4,15 +4,11 @@ import { Symbol } from "../data/symbol"
 
 export class ClassicGamemode implements GameMode
 {
-    public checkWinCondition(board: number[][]): boolean
+    public checkWinCondition(board: number[][]): Symbol
     {
         throw new Error("Method not implemented.")
     }
 
-    public nextPlayer(): boolean
-    {
-        throw new Error("Method not implemented.")
-    }
     public canPlaceTile(symbolAtChosenCords: Symbol): PlaceTileResult
     {
         return symbolAtChosenCords === Symbol.EMPTY ? PlaceTileResult.SUCCESS : PlaceTileResult.ALREADY_PLACED_TILE;

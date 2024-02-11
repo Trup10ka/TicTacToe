@@ -4,12 +4,7 @@ import { Symbol } from "../data/symbol"
 
 export class EternityGamemode implements GameMode
 {
-    public checkWinCondition(board: number[][]): boolean
-    {
-        throw new Error("Method not implemented.")
-    }
-
-    public nextPlayer(): boolean
+    public checkWinCondition(board: number[][]): Symbol
     {
         throw new Error("Method not implemented.")
     }

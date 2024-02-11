@@ -3,11 +3,9 @@ import { Symbol } from "../data/symbol"
 
 export interface GameMode
 {
-    checkWinCondition(board: number[][]): boolean
+    checkWinCondition(board: number[][]): Symbol
 
     canPlaceTile(symbolAtChosenCords: Symbol): PlaceTileResult
-
-    nextPlayer(): boolean
 
     getName(): string
 }
