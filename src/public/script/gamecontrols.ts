@@ -6,7 +6,11 @@ const playgroundGrid = document.getElementById("playground-grid") as HTMLDivElem
 
 const nameInputButton = document.getElementById("enter-name-button") as HTMLButtonElement
 const nameInputField = document.getElementById("player-name-input") as HTMLInputElement
-const popup = document.getElementById("popup") as HTMLDivElement
+const namePopup = document.getElementById("popup") as HTMLDivElement
+
+const winPopupName = document.getElementById("winning-player-name") as HTMLDivElement
+const winPopupSymbol = document.getElementById("winning-player-symbol") as HTMLDivElement
+const winPopup = document.getElementById("win-popup") as HTMLDivElement
 
 const gameId = url.searchParams.get("id")!
 
@@ -27,7 +31,14 @@ function queryName()
 {
     const playerName = nameInputField.value
     ws.emit("set-player-name", gameId, playerName)
-    popup.classList.toggle("hide")
+    namePopup.classList.toggle("hide")
+}
+
+function toggleWinningScreen(winPLayerName: string, winPlayerSymbol: string)
+{
+    winPopupName.innerText = winPLayerName
+    winPopupSymbol.innerText = winPlayerSymbol
+    winPopup.classList.toggle("hide")
 }
 
 function establishWebSocketConnection()
@@ -119,8 +130,8 @@ function configureWebsocket(ws: io.Socket)
         }
     )
 
-    ws.on("game-end", (winningSymbol: string) => {
-            console.log("Game ended, winning symbol: " + winningSymbol)
+    ws.on("game-end", (winningPlayer: string, winningSymbol: string) => {
+            toggleWinningScreen(winningPlayer, winningSymbol)
         }
     )
 }

@@ -43,7 +43,9 @@ export class Session
         if (winCondition === 0)
             return
         this.sessionState = SessionState.FINISHED
-        this.io.to(this.id).emit('game-end', this.getPlayerBySymbol(winCondition), Symbol[winCondition])
+        const winner = this.getPlayerBySymbol(winCondition)!
+        // TODO: Implement checking for invalid player
+        this.io.to(this.id).emit('game-end', winner.name, Symbol[winner.symbol!])
     }
 
     public addPlayer(player: Player)
